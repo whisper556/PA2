@@ -1,0 +1,6 @@
+root         228  0.0  0.2  30280 19040 ?        Ss   18:35   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+root         266  0.0  0.0   4784  3360 ?        Ss   18:35   0:00 /bin/bash /snap/ubuntu-desktop-installer/1286/bin/subiquity-server
+root         273  0.0  0.2 107260 21440 ?        Ssl  18:35   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+root         346  0.2  1.3 2384588 107320 ?      Sl   18:35   0:05 /snap/ubuntu-desktop-installer/1286/usr/bin/python3.10 -m subiquity.cmd.server --use-os-prober --storage-version=2 --postinst-hooks-dir=/snap/ubuntu-desktop-installer/1286/etc/subiquity/postinst.d
+root         414  0.0  0.0   7528  4640 pts/1    Ss   18:35   0:00 /bin/login -f
+root         493  0.5  0.4  44184 37572 ?        S    18:35   0:11 python3 /snap/ubuntu-desktop-installer/1286/usr/bin/cloud-init status --wait

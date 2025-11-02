@@ -1,0 +1,1 @@
+root         273  0.0  0.2 107260 21440 ?        Ssl  18:35   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
