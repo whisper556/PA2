@@ -24,6 +24,8 @@
 #define NC      "\033[0m"
 
 using namespace std;
+
+
 string trim (const string in) {
     int i = in.find_first_not_of(" \n\r\t");
     int j = in.find_last_not_of(" \n\r\t");
@@ -85,7 +87,7 @@ int main () {
         cout << WHITE  << time_buf << " " 
 	     << GREEN  << username << "@" << hostname << NC << ":"
 	     << BLUE   << path << NC
-	     << " "    << prompt_symbol << " ";
+	     << prompt_symbol;
         
         // get user inputted command
         string input;
@@ -187,6 +189,13 @@ int main () {
 }
 
                 // fork to create child
+
+		cerr << "DEBUG: CMD:";
+for (auto& arg : cmd->args) cerr << " " << arg;
+if (cmd->hasInput()) cerr << " < " << cmd->in_file;
+if (cmd->hasOutput()) cerr << " > " << cmd->out_file;
+cerr << endl;
+
 		pid_t pid = fork();
 		if (pid < 0) {  // error check
 		    perror("fork");
@@ -212,7 +221,7 @@ int main () {
 			
 			close(fd_in);
 		   }
-		   
+
 if (cmd->hasOutput()) {
     if (cmd->out_file.empty()) {
         cerr << "Error: output redirection with no file specified\n";
