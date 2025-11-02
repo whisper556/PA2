@@ -212,19 +212,21 @@ int main () {
 			
 			close(fd_in);
 		   }
+		   
+if (cmd->hasOutput()) {
+    if (cmd->out_file.empty()) {
+        cerr << "Error: output redirection with no file specified\n";
+        exit(4);
+    }
+    int fd_out = open(cmd->out_file.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    if (fd_out < 0) {
+        perror("open(output)");
+        exit(4);
+    }
+    dup2(fd_out, STDOUT_FILENO);
+    close(fd_out);
+}
 
-		   if(cmd->hasOutput()){
-			int fd_out = open(cmd->out_file.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0644);
-
-			if(fd_out < 0){
-				perror("open(output)");
-				exit(4);
-			}
-			
-			dup2(fd_out, STDOUT_FILENO);
-			
-			close(fd_out);
-		   }	
 
 		    vector<char*> args;
 		    for(const string& s : cmd->args){
