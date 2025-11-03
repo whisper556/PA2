@@ -49,25 +49,27 @@ int main () {
 
      for (;;) {
         // need date/time, username, and absolute path to current dir
-char path_buf[PATH_MAX + 1];
-if (getcwd(path_buf, sizeof(path_buf)) == NULL) {
-    perror("getcwd");
-    exit(1);
-}
-string path = path_buf;
-
 time_t now = time(0);
 struct tm *tstruct = localtime(&now);
 char time_buf[80];
 strftime(time_buf, sizeof(time_buf), "%b %d %H:%M:%S", tstruct);
 
-const char* user_env = getenv("USER");
-string username = (user_env != nullptr) ? user_env : "user";
+const char* user = getenv("USER");
+string username = (user != nullptr) ? user : "user";
 
-string prompt_symbol = "$";
+char path_buf[PATH_MAX + 1];
+if (getcwd(path_buf, sizeof(path_buf)) == NULL) {
+    strncpy(path_buf, "/?", sizeof(path_buf));
+}
+path_buf[PATH_MAX] = '\0';
+string path = path_buf;
 
-cout << time_buf << " " << username << ":" << path << prompt_symbol << " ";
-cout.flush(); 
+string prompt_symbol = "$";  // Always $
+
+cout << WHITE  << time_buf << " "
+     << GREEN  << username << NC << ":"
+     << BLUE   << path << NC
+     << prompt_symbol;
 
 
         // get user inputted command
