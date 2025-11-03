@@ -64,12 +64,17 @@ int main () {
 
         // --- Determine prompt symbol ---
         string prompt_symbol = (geteuid() == 0) ? "#" : "$";
+		
+		const char* user = getenv("USER");
+        string username = (user != nullptr) ? user : "user";
+
 
         // --- Print prompt ---
-        cout << WHITE << time_buf << " "
-             << BLUE << path << NC
-             << prompt_symbol << " " // note: single space at end
-             << flush;
+        cout << WHITE  << time_buf << " "
+       << GREEN  << username << NC << ":"   // print username
+       << BLUE   << path << NC
+       << prompt_symbol << " ";
+
 
         // get user inputted command
         string input;
