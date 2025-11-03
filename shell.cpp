@@ -59,7 +59,7 @@ int main() {
         cout << time_buf << " "
              << username << ":"
              << path
-             << prompt_symbol << " ";
+             << prompt_symbol << " "<< flush;
 
         string input;
         getline(cin, input);
