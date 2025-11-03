@@ -64,7 +64,7 @@ if (getcwd(path_buf, sizeof(path_buf)) == NULL) {
 path_buf[PATH_MAX] = '\0';
 string path = path_buf;
 
-string prompt_symbol = "$";  // Always $
+char prompt_symbol = "$";  // Always $
 
 cout << time_buf << " "
      << username  << ":"
