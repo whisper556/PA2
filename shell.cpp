@@ -49,46 +49,28 @@ int main () {
 
      for (;;) {
         // need date/time, username, and absolute path to current dir
-	
-	time_t now = time(0);
-	struct tm *tstruct = localtime(&now);
-	char time_buf[80];
+           time_t now = time(nullptr);
+        struct tm* tstruct = localtime(&now);
+        char time_buf[80];
+        strftime(time_buf, sizeof(time_buf), "%b %d %H:%M:%S", tstruct);
 
-	strftime(time_buf, sizeof(time_buf), "%b %d %H:%M:%S", tstruct);
-
-	const char* user = getenv("USER");
-	string username = (user != nullptr) ? user : "user";
-
-	char host_buf[HOST_NAME_MAX + 1];
-	if(gethostname(host_buf, sizeof(host_buf)) < 0){
-		strncpy(host_buf, "localhost" , sizeof(host_buf));
-	}
-	host_buf[HOST_NAME_MAX] = '\0';
-	string hostname = host_buf;
-
-        char path_buf[PATH_MAX + 1]; // +1 for null terminator safety
-        if (getcwd(path_buf, sizeof(path_buf)) == NULL) {
-            // Handle error if getcwd fails
+        // --- Get current working directory ---
+        char path_buf[PATH_MAX + 1];
+        if (getcwd(path_buf, sizeof(path_buf)) == nullptr) {
             strncpy(path_buf, "/?", sizeof(path_buf));
         }
-        path_buf[PATH_MAX] = '\0'; // Ensure null-termination
-        string path = path_buf;    // NOW this is safe
+        path_buf[PATH_MAX] = '\0';
+        string path = path_buf; // Full path only
 
-        // 5. Abbreviate Path with ~
-        const char* home = getenv("HOME");
-        if (home != nullptr) {
-            string home_dir = home;
-            if (path.rfind(home_dir, 0) == 0) { // If path starts with home_dir
-                path.replace(0, home_dir.length(), "~");
-            }
-        }
-	string prompt_symbol = (geteuid() == 0 ) ? "#" : "$";
+        // --- Determine prompt symbol ---
+        string prompt_symbol = (geteuid() == 0) ? "#" : "$";
 
-        cout << WHITE  << time_buf << " " 
-	     << GREEN  << username << "@" << hostname << NC << ":"
-	     << BLUE   << path << NC
-	     << prompt_symbol;
-        
+        // --- Print prompt ---
+        cout << WHITE << time_buf << " "
+             << BLUE << path << NC
+             << prompt_symbol << " " // note: single space at end
+             << flush;
+
         // get user inputted command
         string input;
         getline(cin, input);
