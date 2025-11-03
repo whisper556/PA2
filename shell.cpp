@@ -66,9 +66,9 @@ string path = path_buf;
 
 string prompt_symbol = "$";  // Always $
 
-cout << WHITE  << time_buf << " "
-     << GREEN  << username << NC << ":"
-     << BLUE   << path << NC
+cout << time_buf << " "
+     << username  << ":"
+     << path 
      << prompt_symbol << " ";
 
 
