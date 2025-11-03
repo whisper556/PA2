@@ -67,6 +67,10 @@ int main() {
             continue;
         }
 
+        if (cin.eof() || cin.fail()) {
+           break; 
+       }
+
         if (input == "exit") {
             cout << RED << "Now exiting shell..." << endl << "Goodbye" << NC << endl;
             break;
