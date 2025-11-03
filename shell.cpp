@@ -69,7 +69,7 @@ string prompt_symbol = "$";  // Always $
 cout << WHITE  << time_buf << " "
      << GREEN  << username << NC << ":"
      << BLUE   << path << NC
-     << prompt_symbol;
+     << prompt_symbol << " ";
 
 
         // get user inputted command
