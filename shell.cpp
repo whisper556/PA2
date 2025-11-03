@@ -70,9 +70,9 @@ int main () {
 
 
         // --- Print prompt ---
-        cout << WHITE  << time_buf << " "
-       << GREEN  << username << NC << ":"   // print username
-       << BLUE   << path << NC
+        cout << time_buf << " "
+       << username <<  ":"   // print username
+       << path 
        << prompt_symbol << " ";
 
 
