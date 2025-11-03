@@ -39,6 +39,12 @@ int main() {
     string old_pwd = path_buf;
 
     for (;;) {
+
+        int status;
+        while (waitpid(-1, &status, WNOHANG) > 0) {
+        
+        }
+        
         time_t now = time(0);
         struct tm* tstruct = localtime(&now);
         char time_buf[80];
