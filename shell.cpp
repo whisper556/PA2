@@ -49,31 +49,25 @@ int main () {
 
      for (;;) {
         // need date/time, username, and absolute path to current dir
-           time_t now = time(nullptr);
-        struct tm* tstruct = localtime(&now);
-        char time_buf[80];
-        strftime(time_buf, sizeof(time_buf), "%b %d %H:%M:%S", tstruct);
+char path_buf[PATH_MAX + 1];
+if (getcwd(path_buf, sizeof(path_buf)) == NULL) {
+    perror("getcwd");
+    exit(1);
+}
+string path = path_buf;
 
-        // --- Get current working directory ---
-        char path_buf[PATH_MAX + 1];
-        if (getcwd(path_buf, sizeof(path_buf)) == nullptr) {
-            strncpy(path_buf, "/?", sizeof(path_buf));
-        }
-        path_buf[PATH_MAX] = '\0';
-        string path = path_buf; // Full path only
+time_t now = time(0);
+struct tm *tstruct = localtime(&now);
+char time_buf[80];
+strftime(time_buf, sizeof(time_buf), "%b %d %H:%M:%S", tstruct);
 
-        // --- Determine prompt symbol ---
-        string prompt_symbol = (geteuid() == 0) ? "#" : "$";
-		
-		const char* user = getenv("USER");
-        string username = (user != nullptr) ? user : "user";
+const char* user_env = getenv("USER");
+string username = (user_env != nullptr) ? user_env : "user";
 
+string prompt_symbol = "$";
 
-        // --- Print prompt ---
-        cout << time_buf << " "
-       << username <<  ":"   // print username
-       << path 
-       << prompt_symbol << " ";
+cout << time_buf << " " << username << ":" << path << prompt_symbol << " ";
+cout.flush(); 
 
 
         // get user inputted command
